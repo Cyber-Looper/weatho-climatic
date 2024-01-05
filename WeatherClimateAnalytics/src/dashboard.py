@@ -19,7 +19,7 @@ if file is not None:
     data = pd.read_csv(filename)
     st.write(data)
 else:
-    data = pd.read_csv("upd_forecast_data.csv")
+    data = pd.read_csv("upd_forecast_data.csv", encoding="unicode_escape")
     st.write(data)
 
 # Sidebar
