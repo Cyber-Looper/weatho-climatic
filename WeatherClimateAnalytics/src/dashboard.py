@@ -76,6 +76,29 @@ with right_col:
 
 st.markdown("---")
 
+# Map chart for Localized Analysis for Precipitation, USA
+st.subheader('Localized Analysis for Precipitation, USA')
+
+# Load the built-in GeoDataFrame of US states
+us_states = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+
+# Merge the GeoDataFrame with the DataFrame containing precipitation data
+merged_data = pd.merge(us_states, filtered_data1, left_index=True, right_index=True, how='inner')
+
+fig = px.choropleth(merged_data,
+                    geojson=merged_data.geometry,
+                    locations=merged_data.index,
+                    color='TOT_PRECIPITATION_IN',
+                    labels={'TOT_PRECIPITATION_IN': 'Total Precipitations', 'State': 'State'},
+                    hover_data=['State', 'TOT_PRECIPITATION_IN'],
+                    projection='miller',
+                    title='USA State Map with Total Precipitation',
+                    height=500,
+                    width=1100
+                    )
+st.plotly_chart(fig)
+
+
 # Line chart for Avg Temp. per Day
 
 # Convert 'DATE_VALID_STD' column to datetime
@@ -107,7 +130,6 @@ elif selected_option == "MIN_TEMPERATURE_AIR_2M_F":
                   labels={selected_option: "Minimum Temperature for Air", "DATE_VALID_STD": "Days"}, height=500,
                   width=1000, template="gridon")
     st.plotly_chart(fig, use_container_width=True)
-
 
 # WindRose chart for Minimal and Maximum WindSpeed Variance By Region
 st.subheader('WindSpeed Variance By Region')
@@ -232,24 +254,4 @@ elif selected_ws == 'Maximum Pressure':
                  height=600, width=1100, text='MAX_PRESSURE_MEAN_SEA_LEVEL_MB')
     st.plotly_chart(fig)
 
-# map by Precipitation
-st.subheader('Localized Analysis for Precipitation, USA')
 
-# Load the built-in GeoDataFrame of US states
-us_states = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
-
-# Merge the GeoDataFrame with the DataFrame containing precipitation data
-merged_data = pd.merge(us_states, filtered_data1, left_index=True, right_index=True, how='inner')
-
-fig = px.choropleth(merged_data,
-                    geojson=merged_data.geometry,
-                    locations=merged_data.index,
-                    color='TOT_PRECIPITATION_IN',
-                    labels={'TOT_PRECIPITATION_IN': 'Total Precipitations', 'State': 'States'},
-                    hover_data=['State', 'TOT_PRECIPITATION_IN'],
-                    projection='miller',
-                    title='USA State Map with Total Precipitation',
-                    height=500,
-                    width=1100
-                   )
-st.plotly_chart(fig)
