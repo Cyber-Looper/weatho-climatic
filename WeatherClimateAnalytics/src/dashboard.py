@@ -16,7 +16,7 @@ st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allo
 
 # Introduction
 
-st.write(':snowflake: ***Weather*** and ***Climate*** play a pivotal role in shaping the daily lives of people across '
+st.write(':snowflake: **Weather** and **Climate** play a pivotal role in shaping the daily lives of people across '
          'the United States. The'
          'period from 2021 to 2022 witnessed significant climatic events, impacting various regions, states, '
          'and cities. This dashboard provides a overview of key weather parameters, including ***air temperature, '
