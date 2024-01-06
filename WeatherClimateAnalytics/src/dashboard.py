@@ -92,7 +92,7 @@ fig = px.choropleth(merged_data,
                     labels={'TOT_PRECIPITATION_IN': 'Total Precipitations', 'State': 'State'},
                     hover_data=['State', 'TOT_PRECIPITATION_IN'],
                     projection='miller',
-                    title='***USA State Map with Total Precipitation***',
+                    title='USA State Map with Total Precipitation',
                     height=500,
                     width=1100
                     )
@@ -170,7 +170,7 @@ if selected_ws == "Minimal WindSpeed":
 
     wind_fig1.update_traces(text=['North', 'N-E', 'East', 'S-E', 'South', 'S-W', 'West', 'N-W'])
     wind_fig1.update_layout(
-        title='***Wind Speed Distribution***',
+        title='Wind Speed Distribution',
         # font_size=16,
         font=dict(family='Arial', size=14, color='orange'),
         legend_font_size=16,
@@ -217,7 +217,7 @@ elif selected_ws == "Maximum WindSpeed":
 
     wind_fig2.update_traces(text=['North', 'N-E', 'East', 'S-E', 'South', 'S-W', 'West', 'N-W'])
     wind_fig2.update_layout(
-        title='***Wind Speed Distribution***',
+        title='Wind Speed Distribution',
         # font_size=16,
         font=dict(family='Arial', size=14, color='orange'),
         legend_font_size=16,
@@ -240,7 +240,7 @@ selected_ws = st.radio("***Pressure level***", options_mapping)
 
 if selected_ws == 'Minimal Pressure':
     fig = px.bar(filtered_data1, x='State', y='MIN_PRESSURE_MEAN_SEA_LEVEL_MB', color="State",
-                 title="***Pressure Of Sea level by State***",
+                 title="Pressure Of Sea level by State",
                  hover_data=['State', 'MIN_PRESSURE_MEAN_SEA_LEVEL_MB'],
                  labels={'MIN_PRESSURE_MEAN_SEA_LEVEL_MB': 'Minimal Pressure of Sea level', 'Region': 'Region'},
                  height=600, width=1100, text='MIN_PRESSURE_MEAN_SEA_LEVEL_MB')
@@ -248,7 +248,7 @@ if selected_ws == 'Minimal Pressure':
 
 elif selected_ws == 'Maximum Pressure':
     fig = px.bar(filtered_data1, x='State', y='MAX_PRESSURE_MEAN_SEA_LEVEL_MB', color="State",
-                 title="***Pressure Of Sea level by State***",
+                 title="Pressure Of Sea level by State",
                  hover_data=['State', 'MAX_PRESSURE_MEAN_SEA_LEVEL_MB'],
                  labels={'MAX_PRESSURE_MEAN_SEA_LEVEL_MB': 'Maximum Pressure of Sea level', 'State': 'State'},
                  height=600, width=1100, text='MAX_PRESSURE_MEAN_SEA_LEVEL_MB')
