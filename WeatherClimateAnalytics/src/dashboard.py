@@ -254,7 +254,7 @@ elif selected_ws == "Maximum WindSpeed":
     st.plotly_chart(wind_fig2, use_container_width=True)
 
 # Bar chart for Pressure of Sea level Variance By State
-st.subheader(':bar_chart: Pressure of Sea level Variance By State')
+st.subheader(':ocean: Pressure of Sea level Variance By State')
 st.write(':pushpin: The sea-level pressure dynamics exhibited regional variations across USA states from 2021 to '
          '2022. Changes in sea-level pressure played a crucial role in influencing weather patterns, '
          'storm developments, and oceanic currents. Monitoring state-specific sea-level pressure variations was '
