@@ -19,7 +19,7 @@ if file is not None:
     data = pd.read_csv(filename)
     st.write(data)
 else:
-    data = pd.read_csv("/mount/src/weatho-climatic/WeatherClimateAnalytics/src/upd_forecast_data.csv")
+    data = pd.read_csv("/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/upd_forecast_data.csv")
     st.write(data)
 
 # Sidebar
