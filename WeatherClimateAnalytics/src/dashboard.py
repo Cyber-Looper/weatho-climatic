@@ -16,9 +16,10 @@ st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allo
 
 # Introduction
 
-st.write('Weather and climate play a pivotal role in shaping the daily lives of people across the United States. The '
+st.write(':snowflake: Weather and climate play a pivotal role in shaping the daily lives of people across the United '
+         'States. The'
          'period from 2021 to 2022 witnessed significant climatic events, impacting various regions, states, '
-         'and cities. This article provides a brief overview of key weather parameters, including ***air temperature, '
+         'and cities. This dashboard provides a overview of key weather parameters, including ***air temperature, '
          'wind speed, sea-level pressure, solar radiation, precipitation, and snowfall***.')
 
 # data = pd.read_csv('../dataset/upd_forecast_data.csv')
@@ -85,7 +86,12 @@ st.markdown("---")
 
 # Map chart for Localized Analysis for Precipitation, USA
 st.subheader(':thunder_cloud_and_rain: Localized Analysis for Precipitation, USA')
-
+st.write(':pushpin: The USA witnessed diverse precipitation patterns across its states from 2021 to 2022. Some '
+         'regions faced'
+         'prolonged droughts, impacting water resources and agriculture, while others grappled with heavy rainfall '
+         'and storms, leading to flooding and infrastructure challenges. Precise state-specific precipitation '
+         'forecasting proved vital for managing water resources, mitigating the impact of extreme weather events, '
+         'and supporting informed decision-making in various sectors.')
 # Load the built-in GeoDataFrame of US states
 us_states = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
@@ -111,7 +117,11 @@ st.plotly_chart(fig)
 # Convert 'DATE_VALID_STD' column to datetime
 filtered_data1['DATE_VALID_STD'] = pd.to_datetime(filtered_data1['DATE_VALID_STD'], format='%d-%m-%Y')
 st.subheader(':fog: Air Temperature on a Daily Basis')
-
+st.write(':pushpin: Throughout 2021-2022, the USA experienced dynamic fluctuations in daily air temperatures. '
+         'Record-breaking heatwaves and unseasonable cold spells marked the extremes, with minimum temperatures '
+         'plunging and maximum'
+         'temperatures soaring. Climatologists closely monitored these shifts, providing valuable insights into the '
+         'average daily temperature trends across regions, states, and cities.')
 # Create a radio button
 Options = ["AVG_TEMPERATURE_AIR_2M_F", "MIN_TEMPERATURE_AIR_2M_F", "MAX_TEMPERATURE_AIR_2M_F"]
 selected_option = st.radio("***Temperatures***", Options)
@@ -140,7 +150,12 @@ elif selected_option == "MIN_TEMPERATURE_AIR_2M_F":
 
 # WindRose chart for Minimal and Maximum WindSpeed Variance By Region
 st.subheader(':tornado_cloud: WindSpeed Variance By Region')
-
+st.write(':pushpin: The USA experienced notable wind speed variances across different regions from 2021 to 2022. '
+         'Coastal areas,'
+         'particularly in the East and West, encountered significant wind events influencing maritime activities and '
+         'local climates. Varied wind patterns in the South and Central regions had implications for industries such '
+         'as agriculture, transportation, and renewable energy. Precise regional wind speed forecasting played a '
+         'crucial role in preparing for and adapting to changing atmospheric conditions.')
 # Create a radio button
 options_mapping = ['Minimal WindSpeed', 'Maximum WindSpeed']
 selected_ws = st.radio("***Wind Speeds***", options_mapping)
@@ -240,7 +255,11 @@ elif selected_ws == "Maximum WindSpeed":
 
 # Bar chart for Pressure of Sea level Variance By State
 st.subheader(':bar_chart: Pressure of Sea level Variance By State')
-
+st.write(':pushpin: The sea-level pressure dynamics exhibited regional variations across USA states from 2021 to '
+         '2022. Changes in sea-level pressure played a crucial role in influencing weather patterns, '
+         'storm developments, and oceanic currents. Monitoring state-specific sea-level pressure variations was '
+         'essential for accurate weather forecasting, aiding in the anticipation and preparation for extreme weather '
+         'events in different coastal areas.')
 # Create a radio button
 options_mapping = ['Minimal Pressure', 'Maximum Pressure']
 selected_ws = st.radio("***Pressure level***", options_mapping)
