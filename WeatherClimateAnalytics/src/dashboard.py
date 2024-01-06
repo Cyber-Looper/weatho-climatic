@@ -14,6 +14,13 @@ st.set_page_config(page_title="Weatho-Climatic Analytics", page_icon=":bar_chart
 st.title(":sun_behind_rain_cloud: Weather and Climate Forecasting, USA.")
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
 
+# Introduction
+
+st.write('Weather and climate play a pivotal role in shaping the daily lives of people across the United States. The '
+         'period from 2021 to 2022 witnessed significant climatic events, impacting various regions, states, '
+         'and cities. This article provides a brief overview of key weather parameters, including ***air temperature, '
+         'wind speed, sea-level pressure, solar radiation, precipitation, and snowfall***.')
+
 # data = pd.read_csv('../dataset/upd_forecast_data.csv')
 data = pd.read_csv('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/upd_forecast_data.csv')
 # st.dataframe(data)
