@@ -77,7 +77,7 @@ with right_col:
 st.markdown("---")
 
 # Map chart for Localized Analysis for Precipitation, USA
-st.subheader('Localized Analysis for Precipitation, USA')
+st.subheader(':thunder_cloud_and_rain: Localized Analysis for Precipitation, USA')
 
 # Load the built-in GeoDataFrame of US states
 us_states = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
@@ -103,7 +103,7 @@ st.plotly_chart(fig)
 
 # Convert 'DATE_VALID_STD' column to datetime
 filtered_data1['DATE_VALID_STD'] = pd.to_datetime(filtered_data1['DATE_VALID_STD'], format='%d-%m-%Y')
-st.subheader('Air Temperature on a Daily Basis')
+st.subheader(':fog: Air Temperature on a Daily Basis')
 
 # Create a radio button
 Options = ["AVG_TEMPERATURE_AIR_2M_F", "MIN_TEMPERATURE_AIR_2M_F", "MAX_TEMPERATURE_AIR_2M_F"]
@@ -132,7 +132,7 @@ elif selected_option == "MIN_TEMPERATURE_AIR_2M_F":
     st.plotly_chart(fig, use_container_width=True)
 
 # WindRose chart for Minimal and Maximum WindSpeed Variance By Region
-st.subheader('WindSpeed Variance By Region')
+st.subheader(':tornado_cloud: WindSpeed Variance By Region')
 
 # Create a radio button
 options_mapping = ['Minimal WindSpeed', 'Maximum WindSpeed']
@@ -232,7 +232,7 @@ elif selected_ws == "Maximum WindSpeed":
     st.plotly_chart(wind_fig2, use_container_width=True)
 
 # Bar chart for Pressure of Sea level Variance By State
-st.subheader('Pressure of Sea level Variance By State')
+st.subheader(':bar_chart: Pressure of Sea level Variance By State')
 
 # Create a radio button
 options_mapping = ['Minimal Pressure', 'Maximum Pressure']
