@@ -145,7 +145,7 @@ if selected_ws == "Minimal WindSpeed":
         name='10 m/h',
         theta=filtered_data1['Region'],
         hoverinfo='r+theta+name',
-        marker=dict(color='Yellow',
+        marker=dict(color='Blue',
                     # opacity=0.8
                     ),
     ))
@@ -154,7 +154,7 @@ if selected_ws == "Minimal WindSpeed":
         name='80 m/h',
         theta=filtered_data1['Region'],
         hoverinfo='r+theta+name',
-        marker=dict(color='red',
+        marker=dict(color='White',
                     # opacity=0.5
                     ),
     ))
@@ -163,7 +163,7 @@ if selected_ws == "Minimal WindSpeed":
         name='100 m/h',
         theta=filtered_data1['Region'],
         hoverinfo='r+theta+name',
-        marker=dict(color='blue',
+        marker=dict(color='Red',
                     opacity=0.5
                     ),
     ))
@@ -192,7 +192,7 @@ elif selected_ws == "Maximum WindSpeed":
         name='10 m/h',
         theta=filtered_data1['Region'],
         hoverinfo='r+theta+name',
-        marker=dict(color='Yellow',
+        marker=dict(color='Purple',
                     # opacity=0.8
                     ),
     ))
@@ -201,7 +201,7 @@ elif selected_ws == "Maximum WindSpeed":
         name='80 m/h',
         theta=filtered_data1['Region'],
         hoverinfo='r+theta+name',
-        marker=dict(color='red',
+        marker=dict(color='Blue',
                     # opacity=0.5
                     ),
     ))
@@ -210,7 +210,7 @@ elif selected_ws == "Maximum WindSpeed":
         name='100 m/h',
         theta=filtered_data1['Region'],
         hoverinfo='r+theta+name',
-        marker=dict(color='blue',
+        marker=dict(color='Green',
                     opacity=0.5
                     ),
     ))
