@@ -1,6 +1,8 @@
 import streamlit as st
-import plotly.express as px
 import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import geopandas as gpd
 import warnings
 
 warnings.filterwarnings('ignore')
@@ -12,20 +14,13 @@ st.set_page_config(page_title="Weatho-Climatic Analytics", page_icon=":bar_chart
 st.title(":sun_behind_rain_cloud: Weather and Climate Forecasting, USA.")
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
 
-# Upload a dataset
-file = st.file_uploader(":file_folder: Upload a dataset", type=(["csv", "txt", "xlsx", "xls"]))
-if file is not None:
-    filename = file.name
-    data = pd.read_csv(filename)
-    st.write(data)
-else:
-    data = pd.read_csv("/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/upd_forecast_data.csv")
-    st.write(data)
+data = pd.read_csv('../dataset/upd_forecast_data.csv')
+data = pd.read_csv('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/upd_forecast_data.csv')
+# st.dataframe(data)
 
-# Sidebar
-st.sidebar.header("Apply your filter: ")
+# SideBar
+st.sidebar.subheader('Apply Filters:')
 
-# Choose Region
 region = st.sidebar.multiselect("Choose your region", data["Region"].unique())
 if not region:
     data2 = data.copy()
@@ -62,15 +57,34 @@ else:
 
 filtered_data1 = filtered_data.copy()
 
-# Line chart with Avg Temp. per Day
+# Main KPI's
+total_precipitation = int(filtered_data1["TOT_PRECIPITATION_IN"].sum())
+total_snowfall = int(filtered_data1["TOT_SNOWFALL_IN"].sum())
+total_solar_radiation = int(filtered_data1["TOT_RADIATION_SOLAR_TOTAL_WPM2"].sum())
+
+# page layout
+left_col, mid_col, right_col = st.columns(3)
+with left_col:
+    st.subheader("***Total precipitation***")
+    st.subheader(f":sun_behind_rain_cloud: {total_precipitation}")
+with mid_col:
+    st.subheader("***Total snowfall***")
+    st.subheader(f":snow_cloud: {total_snowfall}")
+with right_col:
+    st.subheader("***Total solar radiation***")
+    st.subheader(f":mostly_sunny: {total_solar_radiation}")
+
+st.markdown("---")
+
+# Line chart for Avg Temp. per Day
 
 # Convert 'DATE_VALID_STD' column to datetime
 filtered_data1['DATE_VALID_STD'] = pd.to_datetime(filtered_data1['DATE_VALID_STD'], format='%d-%m-%Y')
-# filtered_data["DATE_VALID_STD"] = filtered_data["DATE_VALID_STD"].dt.to_period("M")
 st.subheader('Air Temperature on a Daily Basis')
+
 # Create a radio button
 Options = ["AVG_TEMPERATURE_AIR_2M_F", "MIN_TEMPERATURE_AIR_2M_F", "MAX_TEMPERATURE_AIR_2M_F"]
-selected_option = st.radio("**Temperature**", Options)
+selected_option = st.radio("***Temperatures***", Options)
 
 if selected_option == "AVG_TEMPERATURE_AIR_2M_F":
     linechart = pd.DataFrame(filtered_data1.groupby(filtered_data1["DATE_VALID_STD"].dt.strftime("%Y %b %d"))[
@@ -94,9 +108,147 @@ elif selected_option == "MIN_TEMPERATURE_AIR_2M_F":
                   width=1000, template="gridon")
     st.plotly_chart(fig, use_container_width=True)
 
-# Monthly Precipitation based on state
 
-# st.subheader("Category wise Sales")
-#     fig = px.bar(category_df, x = "Category", y = "Sales", text = ['${:,.2f}'.format(x) for x in category_df["Sales"]],
-#                  template = "seaborn")
-#     st.plotly_chart(fig,use_container_width=True, height = 200)
+# WindRose chart for Minimal and Maximum WindSpeed Variance By Region
+st.subheader('WindSpeed Variance By Region')
+
+# Create a radio button
+options_mapping = ['Minimal WindSpeed', 'Maximum WindSpeed']
+selected_ws = st.radio("***Wind Speeds***", options_mapping)
+if selected_ws == "Minimal WindSpeed":
+    wind_fig1 = go.Figure()
+
+    wind_fig1.add_trace(go.Barpolar(
+        r=filtered_data1['MIN_WIND_SPEED_10M_MPH'],
+        name='10 m/h',
+        theta=filtered_data1['Region'],
+        hoverinfo='r+theta+name',
+        marker=dict(color='Yellow',
+                    # opacity=0.8
+                    ),
+    ))
+    wind_fig1.add_trace(go.Barpolar(
+        r=filtered_data1['MIN_WIND_SPEED_80M_MPH'],
+        name='80 m/h',
+        theta=filtered_data1['Region'],
+        hoverinfo='r+theta+name',
+        marker=dict(color='red',
+                    # opacity=0.5
+                    ),
+    ))
+    wind_fig1.add_trace(go.Barpolar(
+        r=filtered_data1['MIN_WIND_SPEED_100M_MPH'],
+        name='100 m/h',
+        theta=filtered_data1['Region'],
+        hoverinfo='r+theta+name',
+        marker=dict(color='blue',
+                    opacity=0.5
+                    ),
+    ))
+
+    wind_fig1.update_traces(text=['North', 'N-E', 'East', 'S-E', 'South', 'S-W', 'West', 'N-W'])
+    wind_fig1.update_layout(
+        title='Wind Speed Distribution',
+        # font_size=16,
+        font=dict(family='Arial', size=14, color='orange'),
+        legend_font_size=16,
+        polar_radialaxis_ticksuffix='%',
+        polar_angularaxis_rotation=180,
+        # width=200,
+        # height=500,
+        # paper_bgcolor='lightgray',
+        plot_bgcolor='lightgray',
+        # color_discrete_sequence=px.colors.sequential.Plasma_r
+        # template='plotly_dark'
+    )
+    st.plotly_chart(wind_fig1, use_container_width=True)
+elif selected_ws == "Maximum WindSpeed":
+    wind_fig2 = go.Figure()
+
+    wind_fig2.add_trace(go.Barpolar(
+        r=filtered_data1['MAX_WIND_SPEED_10M_MPH'],
+        name='10 m/h',
+        theta=filtered_data1['Region'],
+        hoverinfo='r+theta+name',
+        marker=dict(color='Yellow',
+                    # opacity=0.8
+                    ),
+    ))
+    wind_fig2.add_trace(go.Barpolar(
+        r=filtered_data1['MAX_WIND_SPEED_80M_MPH'],
+        name='80 m/h',
+        theta=filtered_data1['Region'],
+        hoverinfo='r+theta+name',
+        marker=dict(color='red',
+                    # opacity=0.5
+                    ),
+    ))
+    wind_fig2.add_trace(go.Barpolar(
+        r=filtered_data1['MAX_WIND_SPEED_100M_MPH'],
+        name='100 m/h',
+        theta=filtered_data1['Region'],
+        hoverinfo='r+theta+name',
+        marker=dict(color='blue',
+                    opacity=0.5
+                    ),
+    ))
+
+    wind_fig2.update_traces(text=['North', 'N-E', 'East', 'S-E', 'South', 'S-W', 'West', 'N-W'])
+    wind_fig2.update_layout(
+        title='Wind Speed Distribution',
+        # font_size=16,
+        font=dict(family='Arial', size=14, color='orange'),
+        legend_font_size=16,
+        polar_radialaxis_ticksuffix='%',
+        polar_angularaxis_rotation=180,
+        # width=200,
+        # height=500,
+        # paper_bgcolor='lightgray',
+        plot_bgcolor='lightgray',
+        # template='plotly_dark'
+    )
+    st.plotly_chart(wind_fig2, use_container_width=True)
+
+# Bar chart for Pressure of Sea level Variance By State
+st.subheader('Pressure of Sea level Variance By State')
+
+# Create a radio button
+options_mapping = ['Minimal Pressure', 'Maximum Pressure']
+selected_ws = st.radio("***Pressure level***", options_mapping)
+
+if selected_ws == 'Minimal Pressure':
+    fig = px.bar(filtered_data1, x='State', y='MIN_PRESSURE_MEAN_SEA_LEVEL_MB', color="State",
+                 title="Pressure Of Sea level by State",
+                 hover_data=['State', 'MIN_PRESSURE_MEAN_SEA_LEVEL_MB'],
+                 labels={'MIN_PRESSURE_MEAN_SEA_LEVEL_MB': 'Minimal Pressure of Sea level', 'Region': 'Region'},
+                 height=600, width=1100, text='MIN_PRESSURE_MEAN_SEA_LEVEL_MB')
+    st.plotly_chart(fig)
+
+elif selected_ws == 'Maximum Pressure':
+    fig = px.bar(filtered_data1, x='State', y='MAX_PRESSURE_MEAN_SEA_LEVEL_MB', color="State",
+                 title="Pressure Of Sea level by State",
+                 hover_data=['State', 'MAX_PRESSURE_MEAN_SEA_LEVEL_MB'],
+                 labels={'MAX_PRESSURE_MEAN_SEA_LEVEL_MB': 'Maximum Pressure of Sea level', 'State': 'State'},
+                 height=600, width=1100, text='MAX_PRESSURE_MEAN_SEA_LEVEL_MB')
+    st.plotly_chart(fig)
+
+# map by Precipitation
+st.subheader('Localized Analysis for Precipitation, USA')
+
+# Load the built-in GeoDataFrame of US states
+us_states = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+
+# Merge the GeoDataFrame with the DataFrame containing precipitation data
+merged_data = pd.merge(us_states, filtered_data1, left_index=True, right_index=True, how='inner')
+
+fig = px.choropleth(merged_data,
+                    geojson=merged_data.geometry,
+                    locations=merged_data.index,
+                    color='TOT_PRECIPITATION_IN',
+                    hover_data=['State', 'TOT_PRECIPITATION_IN'],
+                    projection='miller',
+                    title='USA State Map with Total Precipitation',
+                    height=500,
+                    width=1100
+                   )
+st.plotly_chart(fig)
