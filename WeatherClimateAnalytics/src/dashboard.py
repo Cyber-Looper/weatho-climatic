@@ -14,7 +14,7 @@ st.set_page_config(page_title="Weatho-Climatic Analytics", page_icon=":bar_chart
 st.title(":sun_behind_rain_cloud: Weather and Climate Forecasting, USA.")
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
 
-data = pd.read_csv('../dataset/upd_forecast_data.csv')
+# data = pd.read_csv('../dataset/upd_forecast_data.csv')
 data = pd.read_csv('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/upd_forecast_data.csv')
 # st.dataframe(data)
 
