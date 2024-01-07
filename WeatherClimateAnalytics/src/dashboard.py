@@ -15,20 +15,21 @@ st.title(":sun_behind_rain_cloud: Weather and Climate Forecasting, USA.")
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
 
 # Introduction
-
 st.write(':snowflake: **Weather** and **Climate** play a pivotal role in shaping the daily lives of people across '
          'the United States. The'
          'period from 2021 to 2022 witnessed significant climatic events, impacting various regions, states, '
          'and cities. This dashboard provides a overview of key weather parameters, including ***air temperature, '
          'wind speed, sea-level pressure, solar radiation, precipitation, and snowfall***.')
 
-# data = pd.read_csv('../dataset/upd_forecast_data.csv')
+
+# Dataset
 data = pd.read_csv('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/upd_forecast_data.csv')
 # st.dataframe(data)
 
 # SideBar
 st.sidebar.subheader('Apply Filters:')
 
+# Choose Region
 region = st.sidebar.multiselect("Choose your region", data["Region"].unique())
 if not region:
     data2 = data.copy()
@@ -92,6 +93,7 @@ st.write(':pushpin: The USA witnessed diverse precipitation patterns across its 
          'and storms, leading to flooding and infrastructure challenges. Precise state-specific precipitation '
          'forecasting proved vital for managing water resources, mitigating the impact of extreme weather events, '
          'and supporting informed decision-making in various sectors.')
+
 # Load the built-in GeoDataFrame of US states
 us_states = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
@@ -147,6 +149,7 @@ elif selected_option == "MIN_TEMPERATURE_AIR_2M_F":
                   labels={selected_option: "Minimum Temperature for Air", "DATE_VALID_STD": "Days"}, height=500,
                   width=1000, template="gridon")
     st.plotly_chart(fig, use_container_width=True)
+
 
 # WindRose chart for Minimal and Maximum WindSpeed Variance By Region
 st.subheader(':tornado_cloud: WindSpeed Variance By Region')
@@ -252,6 +255,7 @@ elif selected_ws == "Maximum WindSpeed":
         # template='plotly_dark'
     )
     st.plotly_chart(wind_fig2, use_container_width=True)
+
 
 # Bar chart for Pressure of Sea level Variance By State
 st.subheader(':ocean: Pressure of Sea level Variance By State')
