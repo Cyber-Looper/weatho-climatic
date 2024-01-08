@@ -96,9 +96,9 @@ st.write(':pushpin: The USA witnessed diverse precipitation patterns across its 
 # Load the built-in GeoDataFrame of US states
 us_states_data = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 # Filter for U.S. states
-us_states_data = us_states_data[us_states_data['iso_a3'] == 'USA']
+# us_states_data = us_states_data[us_states_data['iso_a3'] == 'USA']
 # Merge the GeoDataFrame with the DataFrame containing precipitation data
-merged_data = pd.merge(us_states_data, filtered_data1, left_on='id', right_on='Postal Code', how='inner')
+merged_data = pd.merge(us_states_data, filtered_data1, left_index=True, right_index=True, how='inner')
 
 fig = px.choropleth(merged_data,
                     geojson=merged_data.geometry,
