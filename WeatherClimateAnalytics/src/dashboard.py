@@ -118,9 +118,9 @@ st.write(':pushpin: The USA witnessed diverse precipitation patterns across its 
 gdal.SetConfigOption('SHAPE_RESTORE_SHX', 'YES')
 us_states = gpd.read_file('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/usa-states.shp')
 
-fig, ax = plt.subplots(figsize=(14,8))
-us_states.plot(ax=ax)
-st.plotly_chart(plt)
+# fig, ax = plt.subplots(figsize=(14,8))
+# us_states.plot(ax=ax)
+# st.plotly_chart(plt)
 # st.write(us_states)
 # fig = px.choropleth(us_states,
 #                     geojson=us_states.geometry,
