@@ -22,7 +22,7 @@ st.write(':snowflake: **Weather** and **Climate** play a pivotal role in shaping
          'wind speed, sea-level pressure, solar radiation, precipitation, and snowfall***.')
 
 # Dataset
-data = pd.read_csv('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/upd_fecast_dta.csv')
+data = pd.read_csv('../dataset/upd_forecast_data.csv')
 # st.dataframe(data)
 
 # SideBar
