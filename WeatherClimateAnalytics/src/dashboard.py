@@ -99,7 +99,7 @@ st.write(':pushpin: The USA witnessed diverse precipitation patterns across its 
 us_states = px.data.us_states()
 
 # Merge the GeoDataFrame with the DataFrame containing precipitation data
-merged_data = pd.merge(us_states, filtered_data1, left_index='id', right_index=True, how='inner')
+merged_data = pd.merge(us_states, filtered_data1, left_on='id', right_on='Postal Code', how='inner')
 
 fig = px.choropleth(merged_data,
                     geojson=merged_data.geometry,
