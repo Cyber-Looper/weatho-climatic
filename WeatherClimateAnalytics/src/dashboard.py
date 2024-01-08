@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-import geopandas as gpd
+# import geopandas as gpd
 import warnings
 
 warnings.filterwarnings('ignore')
@@ -95,10 +95,11 @@ st.write(':pushpin: The USA witnessed diverse precipitation patterns across its 
          'and supporting informed decision-making in various sectors.')
 
 # Load the built-in GeoDataFrame of US states
-us_states = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+# us_states = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+us_states = px.data.us_states()
 
 # Merge the GeoDataFrame with the DataFrame containing precipitation data
-merged_data = pd.merge(us_states, filtered_data1, left_index=True, right_index=True, how='inner')
+merged_data = pd.merge(us_states, filtered_data1, left_index='id', right_index=True, how='inner')
 
 fig = px.choropleth(merged_data,
                     geojson=merged_data.geometry,
