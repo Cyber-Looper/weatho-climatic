@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 import geopandas as gpd
 from osgeo import gdal
 import warnings
@@ -116,7 +117,11 @@ st.write(':pushpin: The USA witnessed diverse precipitation patterns across its 
 
 gdal.SetConfigOption('SHAPE_RESTORE_SHX', 'YES')
 us_states = gpd.read_file('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/usa-states.shp')
-st.write(us_states)
+
+fig, ax = plt.subplots(figsize=(14,8))
+us_states.plot(ax=ax)
+st.plotly_chart(plt)
+# st.write(us_states)
 # fig = px.choropleth(us_states,
 #                     geojson=us_states.geometry,
 #                     locations=us_states.index,  # Assuming each row is a separate geometry
