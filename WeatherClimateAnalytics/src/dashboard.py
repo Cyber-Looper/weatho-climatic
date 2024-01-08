@@ -94,24 +94,24 @@ st.write(':pushpin: The USA witnessed diverse precipitation patterns across its 
          'and supporting informed decision-making in various sectors.')
 
 # Load the built-in GeoDataFrame of US states
-us_states_data = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
-# Filter for U.S. states
-# us_states_data = us_states_data[us_states_data['iso_a3'] == 'USA']
-# Merge the GeoDataFrame with the DataFrame containing precipitation data
-merged_data = pd.merge(us_states_data, filtered_data1, left_index=True, right_index=True, how='inner')
-
-fig = px.choropleth(merged_data,
-                    geojson=merged_data.geometry,
-                    locations=merged_data.index,
-                    color='TOT_PRECIPITATION_IN',
-                    labels={'TOT_PRECIPITATION_IN': 'Total Precipitations', 'State': 'State'},
-                    hover_data=['State', 'TOT_PRECIPITATION_IN'],
-                    projection='miller',
-                    title='USA State Map with Total Precipitation',
-                    height=500,
-                    width=1100
-                    )
-st.plotly_chart(fig)
+# us_states_data = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+# # Filter for U.S. states
+# # us_states_data = us_states_data[us_states_data['iso_a3'] == 'USA']
+# # Merge the GeoDataFrame with the DataFrame containing precipitation data
+# merged_data = pd.merge(us_states_data, filtered_data1, left_index=True, right_index=True, how='inner')
+#
+# fig = px.choropleth(merged_data,
+#                     geojson=merged_data.geometry,
+#                     locations=merged_data.index,
+#                     color='TOT_PRECIPITATION_IN',
+#                     labels={'TOT_PRECIPITATION_IN': 'Total Precipitations', 'State': 'State'},
+#                     hover_data=['State', 'TOT_PRECIPITATION_IN'],
+#                     projection='miller',
+#                     title='USA State Map with Total Precipitation',
+#                     height=500,
+#                     width=1100
+#                     )
+# st.plotly_chart(fig)
 
 # Line chart for Avg Temp. per Day
 
