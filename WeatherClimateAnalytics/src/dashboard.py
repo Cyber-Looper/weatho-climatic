@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import geopandas as gpd
+from osgeo import gdal
 import warnings
 
 warnings.filterwarnings('ignore')
@@ -112,6 +113,18 @@ st.write(':pushpin: The USA witnessed diverse precipitation patterns across its 
 #                     width=1100
 #                     )
 # st.plotly_chart(fig)
+
+gdal.SetConfigOption('SHAPE_RESTORE_SHX', 'YES')
+us_states = gpd.read_file('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/usa-states.shp')
+
+fig = px.choropleth(us_states,
+                    geojson=us_states.geometry,
+                    locations=us_states.index,  # Assuming each row is a separate geometry
+                    color="your_column",  # Adjust based on your data
+                    hover_name="your_hover_column",  # Adjust based on your data
+                    projection="natural earth",
+                    title="Plotly Map Chart with GDAL")
+st.plotly_chart(fig)
 
 # Line chart for Avg Temp. per Day
 
@@ -281,5 +294,5 @@ elif selected_ws == 'Maximum Pressure':
                  height=600, width=1100, text='MAX_PRESSURE_MEAN_SEA_LEVEL_MB')
     st.plotly_chart(fig)
 
-st_count = filtered_data1['State'].unique()
-st.write(st_count)
+# st_count = filtered_data1['State'].unique()
+# st.write(st_count)
