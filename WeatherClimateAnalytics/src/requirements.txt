@@ -4,4 +4,4 @@ pandas
 plotly
 geopandas
 osgeo
-matplotlib
+matplotlib.pyplot
