@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import geopandas as gpd
 from osgeo import gdal
 import warnings
