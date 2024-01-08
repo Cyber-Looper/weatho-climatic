@@ -21,7 +21,6 @@ st.write(':snowflake: **Weather** and **Climate** play a pivotal role in shaping
          'and cities. This dashboard provides a overview of key weather parameters, including ***air temperature, '
          'wind speed, sea-level pressure, solar radiation, precipitation, and snowfall***.')
 
-
 # Dataset
 data = pd.read_csv('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/upd_forecast_data.csv')
 # st.dataframe(data)
@@ -114,7 +113,6 @@ fig = px.choropleth(merged_data,
                     )
 st.plotly_chart(fig)
 
-
 # Line chart for Avg Temp. per Day
 
 # Convert 'DATE_VALID_STD' column to datetime
@@ -150,7 +148,6 @@ elif selected_option == "MIN_TEMPERATURE_AIR_2M_F":
                   labels={selected_option: "Minimum Temperature for Air", "DATE_VALID_STD": "Days"}, height=500,
                   width=1000, template="gridon")
     st.plotly_chart(fig, use_container_width=True)
-
 
 # WindRose chart for Minimal and Maximum WindSpeed Variance By Region
 st.subheader(':tornado_cloud: WindSpeed Variance By Region')
@@ -257,7 +254,6 @@ elif selected_ws == "Maximum WindSpeed":
     )
     st.plotly_chart(wind_fig2, use_container_width=True)
 
-
 # Bar chart for Pressure of Sea level Variance By State
 st.subheader(':ocean: Pressure of Sea level Variance By State')
 st.write(':pushpin: The sea-level pressure dynamics exhibited regional variations across USA states from 2021 to '
@@ -285,4 +281,5 @@ elif selected_ws == 'Maximum Pressure':
                  height=600, width=1100, text='MAX_PRESSURE_MEAN_SEA_LEVEL_MB')
     st.plotly_chart(fig)
 
-
+st_count = filtered_data1['State'].unique()
+st.write(st_count.count())
