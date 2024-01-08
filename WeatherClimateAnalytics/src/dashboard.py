@@ -282,4 +282,4 @@ elif selected_ws == 'Maximum Pressure':
     st.plotly_chart(fig)
 
 st_count = filtered_data1['State'].unique()
-st.write(st_count.count())
+st.write(len(st_count))
