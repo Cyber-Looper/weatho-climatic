@@ -2,3 +2,7 @@
 div[data-baseweb="input"] {
             width: 300px;
         }
+
+#MainMenu {
+    display: none;
+}
