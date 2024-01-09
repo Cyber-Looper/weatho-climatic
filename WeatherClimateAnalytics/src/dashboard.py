@@ -324,42 +324,46 @@ elif selected_ws == 'Maximum Pressure':
                  height=600, width=1100, text='MAX_PRESSURE_MEAN_SEA_LEVEL_MB')
     st.plotly_chart(fig)
 
+st.markdown("---")
 
 # Footer content
 foot1, foot2, foot3 = st.columns(3)
 
 with foot1:
-    st.markdown(
-        """
-        <div class="cust_footer1">
-            <p>logo</p>
-            <p>Weather and Climate Forecasting for USA</p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.subheader("***Weather and Climate Forecasting for USA***")
+    # st.markdown(
+    #     """
+    #     <div class="cust_footer1">
+    #         <p>logo</p>
+    #         <p>Weather and Climate Forecasting for USA</p>
+    #     </div>
+    #     """,
+    #     unsafe_allow_html=True
+    # )
 
 with foot2:
-    st.markdown(
-        """
-        <div class="cust_footer2">
-            <p>Resources</p>
-            <p>Data Source: [Your Data Source]</p>
-            <p>copyright@2024</p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.subheader('***Resources***')
+    # st.markdown(
+    #     """
+    #     <div class="cust_footer2">
+    #         <p>Resources</p>
+    #         <p>Data Source: [Your Data Source]</p>
+    #         <p>copyright@2024</p>
+    #     </div>
+    #     """,
+    #     unsafe_allow_html=True
+    # )
 
 with foot3:
-    st.markdown(
-        """
-        <div class="cust_footer3">
-            <p>Contact Us</p>
-            <p>Email</p>
-
-            <p>Powered by: Climato-Weather</p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.subheader('CONTACT US')
+# st.markdown(
+    #     """
+    #     <div class="cust_footer3">
+    #         <p>Contact Us</p>
+    #         <p>Email</p>
+    #
+    #         <p>Powered by: Climato-Weather</p>
+    #     </div>
+    #     """,
+    #     unsafe_allow_html=True
+    # )
