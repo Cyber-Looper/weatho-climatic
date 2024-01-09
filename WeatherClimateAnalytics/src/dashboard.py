@@ -22,7 +22,7 @@ st.write(':snowflake: **Weather** and **Climate** play a pivotal role in shaping
          'wind speed, sea-level pressure, solar radiation, precipitation, and snowfall***.')
 
 # Dataset
-# data = pd.read_csv('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/upd_forecast_data.csv')
+# data = pd.read_csv('../dataset/upd_forecast_data.csv')
 data = pd.read_csv('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/upd_forecast_data.csv')
 # st.dataframe(data)
 
@@ -116,11 +116,11 @@ st.plotly_chart(fig)
 # Convert 'DATE_VALID_STD' column to datetime
 filtered_data1['DATE_VALID_STD'] = pd.to_datetime(filtered_data1['DATE_VALID_STD'], format='%d-%m-%Y')
 st.subheader(':fog: Air Temperature on a Daily Basis')
-st.write(':pushpin: Throughout 2021-2022, the USA experienced dynamic fluctuations in daily air temperatures. '
+st.write(':pushpin: Throughout 2021-2022, the USA experienced dynamic fluctuations in Monthly air temperatures. '
          'Record-breaking heatwaves and unseasonable cold spells marked the extremes, with minimum temperatures '
          'plunging and maximum'
          'temperatures soaring. Climatologists closely monitored these shifts, providing valuable insights into the '
-         'average daily temperature trends across regions, states, and cities.')
+         'average monthly temperature trends across regions, states, and cities.')
 # Create a radio button
 Options = ["AVG_TEMPERATURE_AIR_2M_F", "MIN_TEMPERATURE_AIR_2M_F", "MAX_TEMPERATURE_AIR_2M_F"]
 selected_option = st.radio("***Temperatures***", Options)
@@ -138,16 +138,28 @@ st.subheader('Apply Timeline')
 col1, col2 = st.columns(2)
 filtered_data_date["DATE_VALID_STD"] = pd.to_datetime(filtered_data_date["DATE_VALID_STD"])
 
+# customize date_input field
+st.markdown(
+    """
+    <style>
+        div[data-baseweb="input"] {
+            width: 300px;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Getting the min and max date
 startDate = pd.to_datetime('2021-12-29')
 # startDate = pd.to_datetime(filtered_data_date["DATE_VALID_STD"]).min()
 endDate = pd.to_datetime(filtered_data_date["DATE_VALID_STD"]).max()
 
 with col1:
-    date1 = pd.to_datetime(st.date_input("Start Date", startDate))
+    date1 = pd.to_datetime(st.date_input("***Start Date***", startDate))
 
 with col2:
-    date2 = pd.to_datetime(st.date_input("End Date", endDate))
+    date2 = pd.to_datetime(st.date_input("***End Date***", endDate))
 
 filtered_date = filtered_data_date[(filtered_data_date["DATE_VALID_STD"] >= date1) & (filtered_data_date["DATE_VALID_STD"] <= date2)].copy()
 # st.write(filtered_date)
@@ -305,73 +317,3 @@ elif selected_ws == 'Maximum Pressure':
                  labels={'MAX_PRESSURE_MEAN_SEA_LEVEL_MB': 'Maximum Pressure of Sea level', 'State': 'State'},
                  height=600, width=1100, text='MAX_PRESSURE_MEAN_SEA_LEVEL_MB')
     st.plotly_chart(fig)
-
-# st_count = filtered_data1['State'].unique()
-# st.write(st_count)
-
-#
-# # Convert 'DATE' column to datetime format
-# filtered_data1['DATE_VALID_STD'] = pd.to_datetime(filtered_data1['DATE_VALID_STD'])
-#
-# # Extract unique years, months, and weeks
-# year_filter = st.slider('Select Year', min_value=int(filtered_data1['DATE_VALID_STD'].dt.year.min()), max_value=int(filtered_data1['DATE_VALID_STD'].dt.year.max()))
-# month_filter = st.slider('Select Month', min_value=1, max_value=12)
-# week_filter = st.slider('Select Week', min_value=1, max_value=53)
-#
-# # Sidebar filters
-# # selected_year = st.sidebar.selectbox('Select Year', year_filter)
-# # selected_month = st.sidebar.selectbox('Select Month', month_filter)
-# # selected_week = st.sidebar.selectbox('Select Week', week_filter)
-#
-# # Filter data based on selected values
-# # filtered_data2 = filtered_data1[
-# #     (filtered_data1['DATE_VALID_STD'].dt.year == year_filter) &
-# #     (filtered_data1['DATE_VALID_STD'].dt.month_name() == month_filter) &
-# #     (filtered_data1['DATE_VALID_STD'].dt.isocalendar().week == week_filter)
-# # ]
-#
-# # Display filtered data
-# st.write('Filtered Data:')
-# df_date = pd.DataFrame({'Year':year_filter, 'Month':month_filter, 'Week': week_filter})
-# st.write(df_date)
-# # df['Date_of_Year_Month_Week'] = pd.to_datetime(df[['year_filter', 'month_filter', 'week_filter']].astype(str).agg('-'.join, axis=1), format='%Y-%m-%U')
-# # st.write(filtered_data2)
-#
-#
-# # Slider for Timeline
-# st.subheader('Choose Period')
-#
-# # Choose Region
-# year_filter = st.slider('Select Year', min_value=int(filtered_data1['DATE_VALID_STD'].dt.year.min()), max_value=int(filtered_data1['DATE_VALID_STD'].dt.year.max()))
-# if not region:
-#     data2 = data.copy()
-# else:
-#     data2 = data[data["Region"].isin(region)]
-#
-# # Choose State
-# state = st.sidebar.multiselect("Choose your state", data2["State"].unique())
-# if not state:
-#     data3 = data2.copy()
-# else:
-#     data3 = data2[data2["State"].isin(state)]
-#
-# # Choose City
-# city = st.sidebar.multiselect("Choose your city", data3["City"].unique())
-#
-# # Filter the data based on Region, State and City
-# if not region and not state and not city:
-#     filtered_data = data
-# elif not state and not city:
-#     filtered_data = data[data["Region"].isin(region)]
-# elif not region and not city:
-#     filtered_data = data[data["State"].isin(state)]
-# elif state and city:
-#     filtered_data = data3[data["State"].isin(state) & data3["City"].isin(city)]
-# elif region and city:
-#     filtered_data = data3[data["Region"].isin(region) & data3["City"].isin(city)]
-# elif region and state:
-#     filtered_data = data3[data["Region"].isin(region) & data3["State"].isin(state)]
-# elif city:
-#     filtered_data = data3[data3["City"].isin(city)]
-# else:
-#     filtered_data = data3[data3["Region"].isin(region) & data3["State"].isin(state) & data3["City"].isin(city)]
