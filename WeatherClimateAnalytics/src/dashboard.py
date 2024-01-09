@@ -326,13 +326,40 @@ elif selected_ws == 'Maximum Pressure':
 
 
 # Footer content
-st.markdown(
-    """
-    <div class="cust_footer">
-        <p>Weather and Climate Forecasting for USA</p>
-        <p>Powered by Streamlit | Data Source: [Your Data Source]</p>
-        <p>Contact us: [Your Contact Information]</p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+foot1, foot2, foot3 = st.columns(3)
+
+with foot1:
+    st.markdown(
+        """
+        <div class="cust_footer">
+            <p>logo</p>
+            <p>Weather and Climate Forecasting for USA</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+with foot2:
+    st.markdown(
+        """
+        <div class="cust_footer">
+            <p>Resources</p>
+            <p>Data Source: [Your Data Source]</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+with foot2:
+    st.markdown(
+        """
+        <div class="cust_footer">
+            <p>Contact Us</p>
+            <p>Email</p>
+            <p>Phone</p>
+            <br><br><br>
+            <p>Powered by: Climato-Weather</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
