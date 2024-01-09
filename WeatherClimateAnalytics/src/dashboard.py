@@ -1,14 +1,9 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.figure_factory as ff
-import numpy as np
 import plotly.graph_objects as go
-import matplotlib
-import matplotlib.pyplot as plt
-import geopandas as gpd
 import warnings
-from osgeo import gdal
+
 
 warnings.filterwarnings('ignore')
 
@@ -108,8 +103,7 @@ fig = px.scatter_mapbox(filtered_data1, lat="Latitude", lon="Longitude", hover_n
                         hover_data=["State", "TOT_PRECIPITATION_IN", "DATE_VALID_STD"],
                         color_discrete_sequence=custom_scale, zoom=3, height=300,
                         title="USA State Map with Total Precipitation",
-                        labels={"State": "State", "TOT_PRECIPITATION_IN": "Total precipitations",
-                                "DATE_VALID_STD": "Timeline"})
+                        labels={"State": "State", "TOT_PRECIPITATION_IN": "Total precipitations"})
 fig.update_layout(
 
     mapbox_style="open-street-map",
