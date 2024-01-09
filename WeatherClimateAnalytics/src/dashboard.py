@@ -330,7 +330,7 @@ st.markdown("---")
 st.markdown(
         """
         <div class="cust_footer">
-            <h5>copyrights@2024</h5>
+            <h6>copyrights@2024</h6>
         </div>
         """,
         unsafe_allow_html=True
