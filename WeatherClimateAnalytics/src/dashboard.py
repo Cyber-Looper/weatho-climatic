@@ -345,6 +345,7 @@ with foot2:
         <div class="cust_footer">
             <p>Resources</p>
             <p>Data Source: [Your Data Source]</p>
+            <p>copyright@2024</p>
         </div>
         """,
         unsafe_allow_html=True
@@ -356,8 +357,7 @@ with foot2:
         <div class="cust_footer">
             <p>Contact Us</p>
             <p>Email</p>
-            <p>Phone</p>
-            <br><br><br>
+
             <p>Powered by: Climato-Weather</p>
         </div>
         """,
