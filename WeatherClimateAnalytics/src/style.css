@@ -14,9 +14,9 @@ div[data-baseweb="input"] {
             position: fixed;
             bottom: 0;
             width: 100%;
-            height: 50px;
+            height: 200px;
         }
 
-p {
-    color: black;
+.cust_footer p {
+    color: #1A2238;
 }
