@@ -1,0 +1,4 @@
+/* customize date_input field */
+div[data-baseweb="input"] {
+            width: 300px;
+        }
