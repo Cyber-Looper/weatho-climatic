@@ -10,7 +10,7 @@ warnings.filterwarnings('ignore')
 # Title
 st.set_page_config(page_title="Weatho-Climatic Analytics", page_icon=":bar_chart:", layout="wide")
 
-with open('style.css') as f:
+with open('/mount/src/weatho-climatic/WeatherClimateAnalytics/src/style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Heading
