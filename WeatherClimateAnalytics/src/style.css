@@ -6,3 +6,12 @@ div[data-baseweb="input"] {
 #MainMenu {
     display: none;
 }
+
+.cust_footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }

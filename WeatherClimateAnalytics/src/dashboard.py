@@ -4,7 +4,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 import warnings
 
-
 warnings.filterwarnings('ignore')
 
 # Title
@@ -164,28 +163,32 @@ with col1:
 with col2:
     date2 = pd.to_datetime(st.date_input("***End Date***", endDate))
 
-filtered_date = filtered_data_date[(filtered_data_date["DATE_VALID_STD"] >= date1) & (filtered_data_date["DATE_VALID_STD"] <= date2)].copy()
+filtered_date = filtered_data_date[
+    (filtered_data_date["DATE_VALID_STD"] >= date1) & (filtered_data_date["DATE_VALID_STD"] <= date2)].copy()
 # st.write(filtered_date)
 
 if selected_option == "AVG_TEMPERATURE_AIR_2M_F":
     linechart = pd.DataFrame(filtered_date.groupby(filtered_date["DATE_VALID_STD"].dt.strftime("%Y %b"))[
                                  "AVG_TEMPERATURE_AIR_2M_F"].sum()).reset_index()
     fig = px.line(linechart, x="DATE_VALID_STD", y=selected_option,
-                  labels={selected_option: "Average Temperature for Air", "DATE_VALID_STD": "Month of Year"}, height=500,
+                  labels={selected_option: "Average Temperature for Air", "DATE_VALID_STD": "Month of Year"},
+                  height=500,
                   width=1000, template="gridon")
     st.plotly_chart(fig, use_container_width=True)
 elif selected_option == "MAX_TEMPERATURE_AIR_2M_F":
     linechart = pd.DataFrame(filtered_date.groupby(filtered_date["DATE_VALID_STD"].dt.strftime("%Y %b"))[
                                  "MAX_TEMPERATURE_AIR_2M_F"].sum()).reset_index()
     fig = px.line(linechart, x="DATE_VALID_STD", y=selected_option,
-                  labels={selected_option: "Maximum Temperature for Air", "DATE_VALID_STD": "Month of Year"}, height=500,
+                  labels={selected_option: "Maximum Temperature for Air", "DATE_VALID_STD": "Month of Year"},
+                  height=500,
                   width=1000, template="gridon")
     st.plotly_chart(fig, use_container_width=True)
 elif selected_option == "MIN_TEMPERATURE_AIR_2M_F":
     linechart = pd.DataFrame(filtered_date.groupby(filtered_date["DATE_VALID_STD"].dt.strftime("%Y %b"))[
                                  "MIN_TEMPERATURE_AIR_2M_F"].sum()).reset_index()
     fig = px.line(linechart, x="DATE_VALID_STD", y=selected_option,
-                  labels={selected_option: "Minimum Temperature for Air", "DATE_VALID_STD": "Month of Year"}, height=500,
+                  labels={selected_option: "Minimum Temperature for Air", "DATE_VALID_STD": "Month of Year"},
+                  height=500,
                   width=1000, template="gridon")
     st.plotly_chart(fig, use_container_width=True)
 
@@ -320,3 +323,16 @@ elif selected_ws == 'Maximum Pressure':
                  labels={'MAX_PRESSURE_MEAN_SEA_LEVEL_MB': 'Maximum Pressure of Sea level', 'State': 'State'},
                  height=600, width=1100, text='MAX_PRESSURE_MEAN_SEA_LEVEL_MB')
     st.plotly_chart(fig)
+
+
+# Footer content
+st.markdown(
+    """
+    <div class="cust_footer">
+        <p>Weather and Climate Forecasting for USA</p>
+        <p>Powered by Streamlit | Data Source: [Your Data Source]</p>
+        <p>Contact us: [Your Contact Information]</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
