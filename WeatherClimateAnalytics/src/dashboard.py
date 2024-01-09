@@ -1,9 +1,14 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import plotly.figure_factory as ff
+import numpy as np
 import plotly.graph_objects as go
+import matplotlib
+import matplotlib.pyplot as plt
 import geopandas as gpd
 import warnings
+from osgeo import gdal
 
 warnings.filterwarnings('ignore')
 
@@ -22,7 +27,8 @@ st.write(':snowflake: **Weather** and **Climate** play a pivotal role in shaping
          'wind speed, sea-level pressure, solar radiation, precipitation, and snowfall***.')
 
 # Dataset
-data = pd.read_csv('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/upd_forecast_data.csv')
+# data = pd.read_csv('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/upd_forecast_data.csv')
+data = pd.read_csv('../dataset/upd_forecast_data.csv')
 # st.dataframe(data)
 
 # SideBar
@@ -93,41 +99,23 @@ st.write(':pushpin: The USA witnessed diverse precipitation patterns across its 
          'forecasting proved vital for managing water resources, mitigating the impact of extreme weather events, '
          'and supporting informed decision-making in various sectors.')
 
-# Load the built-in GeoDataFrame of US states
-# us_states_data = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
-# # Filter for U.S. states
-# # us_states_data = us_states_data[us_states_data['iso_a3'] == 'USA']
-# # Merge the GeoDataFrame with the DataFrame containing precipitation data
-# merged_data = pd.merge(us_states_data, filtered_data1, left_index=True, right_index=True, how='inner')
-#
-# fig = px.choropleth(merged_data,
-#                     geojson=merged_data.geometry,
-#                     locations=merged_data.index,
-#                     color='TOT_PRECIPITATION_IN',
-#                     labels={'TOT_PRECIPITATION_IN': 'Total Precipitations', 'State': 'State'},
-#                     hover_data=['State', 'TOT_PRECIPITATION_IN'],
-#                     projection='miller',
-#                     title='USA State Map with Total Precipitation',
-#                     height=500,
-#                     width=1100
-#                     )
-# st.plotly_chart(fig)
-us_states = gpd.read_file('/mount/src/weatho-climatic/WeatherClimateAnalytics/dataset/usa-states.shp')
-us_states = pd.merge(left=us_states, right=filtered_data1, left_on='NAME', right_on='State', how='left')
-st.write(us_states)
+# Round the column values to 6 decimal places
+filtered_data1['Longitude'] = filtered_data1['Longitude'].astype(float).round(6)
+filtered_data1['Latitude'] = filtered_data1['Latitude'].astype(float).round(6)
 
-# fig, ax = plt.subplots(figsize=(14,8))
-# us_states.plot(ax=ax)
-# st.plotly_chart(plt)
-# st.write(us_states)
-# fig = px.choropleth(us_states,
-#                     geojson=us_states.geometry,
-#                     locations=us_states.index,  # Assuming each row is a separate geometry
-#                     color="your_column",  # Adjust based on your data
-#                     hover_name="your_hover_column",  # Adjust based on your data
-#                     projection="natural earth",
-#                     title="Plotly Map Chart with GDAL")
-# st.plotly_chart(fig)
+custom_scale = ["#FF6A3D", "#A288A6", "#1A2238"]
+fig = px.scatter_mapbox(filtered_data1, lat="Latitude", lon="Longitude", hover_name="State",
+                        hover_data=["State", "TOT_PRECIPITATION_IN", "DATE_VALID_STD"],
+                        color_discrete_sequence=custom_scale, zoom=3, height=300,
+                        title="USA State Map with Total Precipitation",
+                        labels={"State": "State", "TOT_PRECIPITATION_IN": "Total precipitations",
+                                "DATE_VALID_STD": "Timeline"})
+fig.update_layout(
+
+    mapbox_style="open-street-map",
+    margin={"r": 0, "t": 40, "l": 0, "b": 0},
+)
+st.plotly_chart(fig)
 
 # Line chart for Avg Temp. per Day
 
@@ -143,22 +131,49 @@ st.write(':pushpin: Throughout 2021-2022, the USA experienced dynamic fluctuatio
 Options = ["AVG_TEMPERATURE_AIR_2M_F", "MIN_TEMPERATURE_AIR_2M_F", "MAX_TEMPERATURE_AIR_2M_F"]
 selected_option = st.radio("***Temperatures***", Options)
 
+# Choose
+# Sort Date value as ascending order
+filtered_data['DATE_VALID_STD'] = pd.to_datetime(filtered_data['DATE_VALID_STD'], format='%d-%m-%Y')
+filtered_data = filtered_data.sort_values(by='DATE_VALID_STD', ascending=True)
+
+# Page layouts for minimum and maximum dates
+filtered_data_date = filtered_data.copy()
+
+# Timeline to filter Air Temperature
+st.subheader('Apply Timeline')
+col1, col2 = st.columns(2)
+filtered_data_date["DATE_VALID_STD"] = pd.to_datetime(filtered_data_date["DATE_VALID_STD"])
+
+# Getting the min and max date
+startDate = pd.to_datetime('2021-12-29')
+# startDate = pd.to_datetime(filtered_data_date["DATE_VALID_STD"]).min()
+endDate = pd.to_datetime(filtered_data_date["DATE_VALID_STD"]).max()
+
+with col1:
+    date1 = pd.to_datetime(st.date_input("Start Date", startDate))
+
+with col2:
+    date2 = pd.to_datetime(st.date_input("End Date", endDate))
+
+filtered_date = filtered_data_date[(filtered_data_date["DATE_VALID_STD"] >= date1) & (filtered_data_date["DATE_VALID_STD"] <= date2)].copy()
+# st.write(filtered_date)
+
 if selected_option == "AVG_TEMPERATURE_AIR_2M_F":
-    linechart = pd.DataFrame(filtered_data1.groupby(filtered_data1["DATE_VALID_STD"].dt.strftime("%Y %b %d"))[
+    linechart = pd.DataFrame(filtered_date.groupby(filtered_date["DATE_VALID_STD"].dt.strftime("%Y %b"))[
                                  "AVG_TEMPERATURE_AIR_2M_F"].sum()).reset_index()
     fig = px.line(linechart, x="DATE_VALID_STD", y=selected_option,
                   labels={selected_option: "Average Temperature for Air", "DATE_VALID_STD": "Days"}, height=500,
                   width=1000, template="gridon")
     st.plotly_chart(fig, use_container_width=True)
 elif selected_option == "MAX_TEMPERATURE_AIR_2M_F":
-    linechart = pd.DataFrame(filtered_data1.groupby(filtered_data1["DATE_VALID_STD"].dt.strftime("%Y %b %d"))[
+    linechart = pd.DataFrame(filtered_date.groupby(filtered_date["DATE_VALID_STD"].dt.strftime("%Y %b"))[
                                  "MAX_TEMPERATURE_AIR_2M_F"].sum()).reset_index()
     fig = px.line(linechart, x="DATE_VALID_STD", y=selected_option,
                   labels={selected_option: "Maximum Temperature for Air", "DATE_VALID_STD": "Days"}, height=500,
                   width=1000, template="gridon")
     st.plotly_chart(fig, use_container_width=True)
 elif selected_option == "MIN_TEMPERATURE_AIR_2M_F":
-    linechart = pd.DataFrame(filtered_data1.groupby(filtered_data1["DATE_VALID_STD"].dt.strftime("%Y %b %d"))[
+    linechart = pd.DataFrame(filtered_date.groupby(filtered_date["DATE_VALID_STD"].dt.strftime("%Y %b"))[
                                  "MIN_TEMPERATURE_AIR_2M_F"].sum()).reset_index()
     fig = px.line(linechart, x="DATE_VALID_STD", y=selected_option,
                   labels={selected_option: "Minimum Temperature for Air", "DATE_VALID_STD": "Days"}, height=500,
@@ -299,3 +314,70 @@ elif selected_ws == 'Maximum Pressure':
 
 # st_count = filtered_data1['State'].unique()
 # st.write(st_count)
+
+#
+# # Convert 'DATE' column to datetime format
+# filtered_data1['DATE_VALID_STD'] = pd.to_datetime(filtered_data1['DATE_VALID_STD'])
+#
+# # Extract unique years, months, and weeks
+# year_filter = st.slider('Select Year', min_value=int(filtered_data1['DATE_VALID_STD'].dt.year.min()), max_value=int(filtered_data1['DATE_VALID_STD'].dt.year.max()))
+# month_filter = st.slider('Select Month', min_value=1, max_value=12)
+# week_filter = st.slider('Select Week', min_value=1, max_value=53)
+#
+# # Sidebar filters
+# # selected_year = st.sidebar.selectbox('Select Year', year_filter)
+# # selected_month = st.sidebar.selectbox('Select Month', month_filter)
+# # selected_week = st.sidebar.selectbox('Select Week', week_filter)
+#
+# # Filter data based on selected values
+# # filtered_data2 = filtered_data1[
+# #     (filtered_data1['DATE_VALID_STD'].dt.year == year_filter) &
+# #     (filtered_data1['DATE_VALID_STD'].dt.month_name() == month_filter) &
+# #     (filtered_data1['DATE_VALID_STD'].dt.isocalendar().week == week_filter)
+# # ]
+#
+# # Display filtered data
+# st.write('Filtered Data:')
+# df_date = pd.DataFrame({'Year':year_filter, 'Month':month_filter, 'Week': week_filter})
+# st.write(df_date)
+# # df['Date_of_Year_Month_Week'] = pd.to_datetime(df[['year_filter', 'month_filter', 'week_filter']].astype(str).agg('-'.join, axis=1), format='%Y-%m-%U')
+# # st.write(filtered_data2)
+#
+#
+# # Slider for Timeline
+# st.subheader('Choose Period')
+#
+# # Choose Region
+# year_filter = st.slider('Select Year', min_value=int(filtered_data1['DATE_VALID_STD'].dt.year.min()), max_value=int(filtered_data1['DATE_VALID_STD'].dt.year.max()))
+# if not region:
+#     data2 = data.copy()
+# else:
+#     data2 = data[data["Region"].isin(region)]
+#
+# # Choose State
+# state = st.sidebar.multiselect("Choose your state", data2["State"].unique())
+# if not state:
+#     data3 = data2.copy()
+# else:
+#     data3 = data2[data2["State"].isin(state)]
+#
+# # Choose City
+# city = st.sidebar.multiselect("Choose your city", data3["City"].unique())
+#
+# # Filter the data based on Region, State and City
+# if not region and not state and not city:
+#     filtered_data = data
+# elif not state and not city:
+#     filtered_data = data[data["Region"].isin(region)]
+# elif not region and not city:
+#     filtered_data = data[data["State"].isin(state)]
+# elif state and city:
+#     filtered_data = data3[data["State"].isin(state) & data3["City"].isin(city)]
+# elif region and city:
+#     filtered_data = data3[data["Region"].isin(region) & data3["City"].isin(city)]
+# elif region and state:
+#     filtered_data = data3[data["Region"].isin(region) & data3["State"].isin(state)]
+# elif city:
+#     filtered_data = data3[data3["City"].isin(city)]
+# else:
+#     filtered_data = data3[data3["Region"].isin(region) & data3["State"].isin(state) & data3["City"].isin(city)]
