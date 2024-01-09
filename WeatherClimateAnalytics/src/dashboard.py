@@ -331,7 +331,7 @@ foot1, foot2, foot3 = st.columns(3)
 with foot1:
     st.markdown(
         """
-        <div class="cust_footer">
+        <div class="cust_footer1">
             <p>logo</p>
             <p>Weather and Climate Forecasting for USA</p>
         </div>
@@ -342,7 +342,7 @@ with foot1:
 with foot2:
     st.markdown(
         """
-        <div class="cust_footer">
+        <div class="cust_footer2">
             <p>Resources</p>
             <p>Data Source: [Your Data Source]</p>
             <p>copyright@2024</p>
@@ -351,10 +351,10 @@ with foot2:
         unsafe_allow_html=True
     )
 
-with foot2:
+with foot3:
     st.markdown(
         """
-        <div class="cust_footer">
+        <div class="cust_footer3">
             <p>Contact Us</p>
             <p>Email</p>
 

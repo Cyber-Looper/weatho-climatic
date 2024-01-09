@@ -7,7 +7,7 @@ div[data-baseweb="input"] {
     display: none;
 }
 
-.cust_footer {
+.cust_footer1 {
             text-align: center;
             padding: 10px;
             background-color: #f1f1f1;
@@ -17,6 +17,35 @@ div[data-baseweb="input"] {
             height: 200px;
         }
 
-.cust_footer p {
+.cust_footer2 {
+            text-align: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 200px;
+        }
+
+.cust_footer3 {
+            text-align: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 200px;
+        }
+
+.cust_footer1 p {
     color: #1A2238;
 }
+
+.cust_footer2 p {
+    color: #1A2238;
+}
+
+.cust_footer3 p {
+    color: #1A2238;
+}
+
