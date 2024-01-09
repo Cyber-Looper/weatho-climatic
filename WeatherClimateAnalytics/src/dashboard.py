@@ -329,7 +329,9 @@ st.markdown("---")
 # Footer content
 st.markdown(
         """
-        <h5>copyrights@2024</h5>
+        <div class="cust_footer">
+            <h5>copyrights@2024</h5>
+        </div>
         """,
         unsafe_allow_html=True
     )
