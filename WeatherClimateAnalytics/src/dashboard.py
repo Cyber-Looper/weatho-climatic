@@ -169,6 +169,7 @@ if selected_option == "AVG_TEMPERATURE_AIR_2M_F":
                   labels={selected_option: "Average Temperature for Air", "DATE_VALID_STD": "Month of Year"},
                   height=500,
                   width=1000, template="gridon")
+    fig.update_xaxes(categoryorder='total ascending')
     st.plotly_chart(fig, use_container_width=True)
 elif selected_option == "MAX_TEMPERATURE_AIR_2M_F":
     linechart = pd.DataFrame(filtered_date.groupby(filtered_date["DATE_VALID_STD"].dt.strftime("%Y %b"))[
