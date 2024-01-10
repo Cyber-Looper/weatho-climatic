@@ -136,7 +136,11 @@ filtered_data = filtered_data.sort_values(by='DATE_VALID_STD', ascending=True)
 filtered_data_date = filtered_data.copy()
 
 # Timeline to filter Air Temperature
-st.write('**Apply Timeline**')
+aply_fil = st.write('**Apply Timeline**')
+st.markdown(f"""
+        <h4>{aply_fil}</h4>
+    """)
+
 col1, col2 = st.columns(2)
 filtered_data_date["DATE_VALID_STD"] = pd.to_datetime(filtered_data_date["DATE_VALID_STD"])
 
