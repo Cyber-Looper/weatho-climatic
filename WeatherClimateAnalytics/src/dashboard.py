@@ -140,7 +140,7 @@ aply_fil = 'Apply Timeline'
 st.write('**Apply Timeline**')
 st.markdown(f"""
         <h4>{aply_fil}</h4>
-    """)
+    """, unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 filtered_data_date["DATE_VALID_STD"] = pd.to_datetime(filtered_data_date["DATE_VALID_STD"])
