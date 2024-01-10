@@ -136,7 +136,8 @@ filtered_data = filtered_data.sort_values(by='DATE_VALID_STD', ascending=True)
 filtered_data_date = filtered_data.copy()
 
 # Timeline to filter Air Temperature
-aply_fil = st.write('**Apply Timeline**')
+aply_fil = 'Apply Timeline'
+st.write('**Apply Timeline**'))
 st.markdown(f"""
         <h4>{aply_fil}</h4>
     """)
