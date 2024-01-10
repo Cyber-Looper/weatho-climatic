@@ -117,7 +117,7 @@ st.plotly_chart(fig)
 
 # Convert 'DATE_VALID_STD' column to datetime
 filtered_data1['DATE_VALID_STD'] = pd.to_datetime(filtered_data1['DATE_VALID_STD'], format='%d-%m-%Y')
-st.subheader(':fog: Air Temperature on a Daily Basis')
+st.subheader(':fog: Air Temperature on a Monthly Basis')
 st.write(':pushpin: Throughout 2021-2022, the USA experienced dynamic fluctuations in Monthly air temperatures. '
          'Record-breaking heatwaves and unseasonable cold spells marked the extremes, with minimum temperatures '
          'plunging and maximum'
@@ -137,7 +137,6 @@ filtered_data_date = filtered_data.copy()
 
 # Timeline to filter Air Temperature
 aply_fil = 'Apply Timeline'
-
 st.markdown(f"""
         <h5>{aply_fil}</h5>
     """, unsafe_allow_html=True)
