@@ -136,18 +136,17 @@ filtered_data = filtered_data.sort_values(by='DATE_VALID_STD', ascending=True)
 filtered_data_date = filtered_data.copy()
 
 # Timeline to filter Air Temperature
-st.subheader('Apply Timeline')
+st.write('***Apply Timeline***')
 col1, col2 = st.columns(2)
 filtered_data_date["DATE_VALID_STD"] = pd.to_datetime(filtered_data_date["DATE_VALID_STD"])
 
 # customize date_input field
 st.markdown(
     """
-    <style>
-        div[data-baseweb="input"] {
-            width: 300px;
-        }
-    </style>
+    <script>
+        var elem = document.querySelector('[data-testid="stToolbarActions"]');
+        console.log(elem);
+    </script>
     """,
     unsafe_allow_html=True
 )
