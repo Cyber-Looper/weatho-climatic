@@ -140,17 +140,6 @@ st.write('***Apply Timeline***')
 col1, col2 = st.columns(2)
 filtered_data_date["DATE_VALID_STD"] = pd.to_datetime(filtered_data_date["DATE_VALID_STD"])
 
-# customize date_input field
-st.markdown(
-    """
-    <script>
-        var elem = document.querySelector('[data-testid="stToolbarActions"]');
-        console.log(elem);
-    </script>
-    """,
-    unsafe_allow_html=True
-)
-
 # Getting the min and max date
 startDate = pd.to_datetime('2021-12-29')
 # startDate = pd.to_datetime(filtered_data_date["DATE_VALID_STD"]).min()
@@ -164,7 +153,7 @@ with col2:
 
 filtered_date = filtered_data_date[
     (filtered_data_date["DATE_VALID_STD"] >= date1) & (filtered_data_date["DATE_VALID_STD"] <= date2)].copy()
-st.write(filtered_date)
+# st.write(filtered_date)
 
 if selected_option == "AVG_TEMPERATURE_AIR_2M_F":
     linechart = pd.DataFrame(filtered_date.groupby((filtered_date["DATE_VALID_STD"].dt.strftime("%Y %b")))[
