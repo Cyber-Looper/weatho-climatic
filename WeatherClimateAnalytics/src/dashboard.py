@@ -164,7 +164,7 @@ with col2:
 
 filtered_date = filtered_data_date[
     (filtered_data_date["DATE_VALID_STD"] >= date1) & (filtered_data_date["DATE_VALID_STD"] <= date2)].copy()
-# st.write(filtered_date)
+st.write(filtered_date)
 
 if selected_option == "AVG_TEMPERATURE_AIR_2M_F":
     linechart = pd.DataFrame(filtered_date.groupby(filtered_date["DATE_VALID_STD"].dt.strftime("%Y %b"))[
