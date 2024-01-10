@@ -139,7 +139,7 @@ filtered_data_date = filtered_data.copy()
 aply_fil = 'Apply Timeline'
 st.write('**Apply Timeline**')
 st.markdown(f"""
-        <h4>{aply_fil}</h4>
+        <h5>{aply_fil}</h5>
     """, unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
