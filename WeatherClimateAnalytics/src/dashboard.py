@@ -159,12 +159,8 @@ filtered_date = filtered_data_date[
     (filtered_data_date["DATE_VALID_STD"] >= date1) & (filtered_data_date["DATE_VALID_STD"] <= date2)].copy()
 # st.write(filtered_date)
 
-# Sort the DataFrame by the date column in ascending order
-fil_date = filtered_date["DATE_VALID_STD"].dt.strftime("%Y %b")
-fil_date.sort_values(by='DATE_VALID_STD', inplace=True)
-
 if selected_option == "AVG_TEMPERATURE_AIR_2M_F":
-    linechart = pd.DataFrame(filtered_date.groupby(fil_date)[
+    linechart = pd.DataFrame(filtered_date.groupby(filtered_date["DATE_VALID_STD"].dt.strftime("%Y %b"))[
                                  "AVG_TEMPERATURE_AIR_2M_F"].sum()).reset_index()
     fig = px.line(linechart, x="DATE_VALID_STD", y=selected_option,
                   labels={selected_option: "Average Temperature for Air", "DATE_VALID_STD": "Month of Year"},
